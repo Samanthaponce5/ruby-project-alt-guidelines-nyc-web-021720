@@ -6,3 +6,4 @@ class CommandLineInterface
     end
     
     
+#write methods here 
