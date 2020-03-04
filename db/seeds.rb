@@ -29,3 +29,6 @@ i2 = Itinerary.create(destination_id:2, activity_id:2)
 i3 = Itinerary.create(destination_id:3, activity_id:3)
 i4 = Itinerary.create(destination_id:4, activity_id:4)
 i5 = Itinerary.create(destination_id:5, activity_id:5)
+
+
+#test
