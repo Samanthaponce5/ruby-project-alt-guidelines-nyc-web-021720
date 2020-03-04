@@ -1,6 +1,6 @@
 require_relative '../config/environment'
 # require_relative '..app/models/tourist.rb'
-Tourist.destroy_all
+
 
 t1 = Tourist.create(name: "Vanessa", age: 30)
 t2 = Tourist.create(name: "Samantha", age: 20)
