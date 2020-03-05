@@ -23,14 +23,31 @@ class CommandLineInterface
     # def pick_activity(activity)
     #     activity = Activity.find_or_create_by(activity: activity)
     # end 
-    #for activities we could say that as a complemntary bonus for using our site you can pick one of these activities to do at you destination
-    #ask the user if they would like to book an activity if not then put that here flight is confirmed i think we would do tht in confirm method
+  
     
     def get_tourist
      puts "Please enter your first name:"
       @name_input = gets.chomp.capitalize
        create_tourist(@name_input)
     end 
+    def activity
+        prompt = TTY::Prompt.new
+        yes_activity = prompt.yes?("Would you like to book an activity with your flight?")
+        if yes_activity
+        @chosen = prompt.select('Choose your activity of choice') do |menu|
+            menu.default 7
+          
+            menu.choice 'sightseeing'
+            menu.choice 'food tour'
+            menu.choice 'hiking'
+            menu.choice 'hop-on hop-off bus'
+            menu.choice 'museum visit'
+            menu.choice 'helicopter tour'
+            menu.choice 'no activity'
+           end 
+        @final_chosen = " and an activity of #{@chosen}"
+    end
+ end 
 
     def get_destination
       puts "Please enter the city you'd like to visit:"
@@ -53,7 +70,8 @@ class CommandLineInterface
 
     def confirm
         if @confirm_flight == "Yes"
-          puts  "Great #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}!"
+            activity
+          puts  "Great #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}!"
              else
                puts "Would you like to choose another destination? Please input Yes or No"
                   @check_another_flight = gets.chomp.capitalize
@@ -67,21 +85,11 @@ class CommandLineInterface
              end
          end
     end
-
-    # def get_flight_detail
-    #     puts "Please put your first name to see flight detail"
-    #     input_name = gets.chomp.capitalize
-    #     flight_detail(input_name)
-    # end
-
-
+    
 end
     
 
 
 
 
- # def activity
-    #     activities = ["sightseeing", "food tour", "hike", "hop-on hop-off bus", "museum visit", "helicopter tour"] 
-    #         puts "Would you like to book an activity" "Looking for a fun activity on your trip?"
-    # end 
+ 
