@@ -10,11 +10,15 @@ class CommandLineInterface
     # def prompt_instance
     #     @prompt = TTY::Prompt.new
     # end
-
+    
     def greet
-        puts "Welcome to travelocity!"
+     system "figlet -w 90 -c Welcome to travelocity | lolcat -a -d 1 "
+    end
 
-      end
+    # def greet
+    #     puts "Welcome to travelocity!"
+
+    #   end
     end
     
     #just put welcome

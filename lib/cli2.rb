@@ -1,5 +1,6 @@
 # require_relative '../app/models/tourist'
-
+require "tty-prompt"
+require 'figlet'
 
 class CommandLineInterface
     
@@ -12,19 +13,7 @@ class CommandLineInterface
     def to_destination(city, country, depart_date, return_date)
         destination = Destination.find_or_create_by(city: city, country: country, depart_date: depart_date, return_date: return_date)
     end 
-
-    # def flight_detail(name)
-    #     flight = Flight.find_by(name: name)
-    # end
-    #trying to get detail of flight
-
-
-
-    # def pick_activity(activity)
-    #     activity = Activity.find_or_create_by(activity: activity)
-    # end 
-  
-    
+      
     def get_tourist
      puts "Please enter your first name:"
       @name_input = gets.chomp.capitalize
@@ -62,7 +51,7 @@ class CommandLineInterface
     end    
 
         def p
-          price = rand(350...800)
+          price = rand(350...600)
             puts "Going to #{@city_input}, #{@country_input} will cost $#{price}"
              puts "Would you like to confirm this flight to #{@city_input}, #{@country_input}? Please input Yes or No"
               @confirm_flight = gets.chomp.capitalize
@@ -71,7 +60,7 @@ class CommandLineInterface
     def confirm
         if @confirm_flight == "Yes"
             activity
-          puts  "Great #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}!"
+        system "echo Great #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}! | lolcat -a -d 500"
              else
                puts "Would you like to choose another destination? Please input Yes or No"
                   @check_another_flight = gets.chomp.capitalize
@@ -81,7 +70,7 @@ class CommandLineInterface
                  p
                   confirm
              else
-                puts "Thank you #{@name_input} for visiting us, hope too see you again soon!"
+                system "echo Thank you #{@name_input} for visiting us, hope too see you again soon! | lolcat -a -d 500"
              end
          end
     end
