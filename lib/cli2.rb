@@ -1,6 +1,7 @@
 # require_relative '../app/models/tourist'
 require "tty-prompt"
 require 'figlet'
+require 'pry'
 
 class CommandLineInterface
     
@@ -16,7 +17,7 @@ class CommandLineInterface
     def get_flights(tourist, destination)
         @confirmation_n = rand(100...9000)
         flight = Flight.find_or_create_by(tourist_id: tourist.id, destination_id: destination.id, confirmation_num: @confirmation_n)
-        puts "Your flight confirmation number is #{@confirmation_n}."
+        system "echo Your flight confirmation number is #{@confirmation_n}. | lolcat"
     end 
 
     def get_tourist
@@ -66,9 +67,12 @@ class CommandLineInterface
     def confirm(tourist, destination)
         if @confirm_flight == "Yes"
         activity
-        puts "Great, #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}."
+        system "echo Great, #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}. | lolcat"
         puts "          "
         get_flights(tourist, destination)
+        end_options
+        end_option_test
+        
 
              else
                puts "Would you like to choose another destination? Please input Yes or No"
@@ -79,23 +83,55 @@ class CommandLineInterface
                  p
                   confirm(tourist, new_destination)
              else
-                system "echo Thank you #{@name_input} for visiting us, hope too see you again soon! | lolcat -a -d 500"
+                system "echo Thank you #{@name_input} for visiting us, hope too see you again soon! | lolcat"
              end
          end
+    end
+
+    def end_options
+        prompt = TTY::Prompt.new
+        yes_options = prompt.yes?("Would you like to update or cancel your flight?")
+        if yes_options
+           @choices = prompt.select('Choose') do |menu|
+                menu.choice 'Update'
+                menu.choice 'Delete'
+                menu.choice 'Exit'
+                
+            end 
+            @picked = @choices
+            
+        end
+        
+    end
+    def end_option_test
+      if @picked == 'Delete'
+        cancel_flight
+      elsif 
+        @picked == 'Exit'
+      # puts "Enjoy your trip!"
+       system "echo Enjoy your trip!| lolcat -a -d 500"
+
+                
+       exit
+      end
+      
     end
     
     def cancel_flight
         puts "Please enter the confirmation number of the flight you'd like to cancel:"
         @confirmation_n = gets.chomp 
-
-        flight = Flight.find_by(@confirmation_n)
-        if flight == flight 
-                flight.delete
-                puts "Your flight to #{@city_input}, #{@country_input} has been canceled."
-            else 
-                puts "Thanks for visiting TravelPro! Have a safe flight."
-        end 
+        if flight = Flight.find_by(confirmation_num: @confirmation_n)
+            flight.delete
+            system "echo Your flight to #{@city_input}, #{@country_input} has been canceled. | lolcat -a -d 500"
+            exit
+        # else 
+        #     puts "Please enter a valid confirmation number."
+        #     cancel_flight
+            
+        end    
     end 
+
+
 end 
     
     
