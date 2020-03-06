@@ -12,13 +12,9 @@ class CommandLineInterface
     # end
     
     def greet
-     system "figlet -w 90 -c Welcome to travelocity | lolcat -a -d 1 "
+     system "figlet -w 98 -c Welcome to TravelPro | lolcat -a -d 1 "
     end
 
-    # def greet
-    #     puts "Welcome to travelocity!"
-
-    #   end
     end
     
     #just put welcome

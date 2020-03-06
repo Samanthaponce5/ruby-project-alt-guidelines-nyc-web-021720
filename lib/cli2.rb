@@ -71,8 +71,10 @@ class CommandLineInterface
     def confirm
         if @confirm_flight == "Yes"
         activity
-        system "echo Great, #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}! | lolcat -a -d 500"
-        system "echo #{get_flights} | lolcat -a -d 500"
+        puts "Great, #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}."
+        puts "          "
+        get_flights
+
              else
                puts "Would you like to choose another destination? Please input Yes or No"
                   @check_another_flight = gets.chomp.capitalize
@@ -93,11 +95,11 @@ class CommandLineInterface
         @confirmation_n = gets.chomp 
 
         flight = Flight.find_by(@confirmation_n)
-        if @confirmation_n == flight 
+        if flight == flight 
                 flight.delete
                 puts "Your flight to #{@city_input}, #{@country_input} has been canceled."
             else 
-                puts "Thanks for visiting Travelocity! Have a safe flight."
+                puts "Thanks for visiting TravelPro! Have a safe flight."
         end 
     end 
 end 
