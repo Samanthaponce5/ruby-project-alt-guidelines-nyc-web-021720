@@ -13,14 +13,9 @@ class CommandLineInterface
         destination = Destination.find_or_create_by(city: city, country: country, depart_date: depart_date, return_date: return_date)
     end 
 
-    # def confirmation_number
-    #     @confirmation_n = rand(100...9000)
-    #     puts "Your flight confirmation number is #{@confirmation_n}."
-    # end 
-
-    def get_flights
+    def get_flights(tourist, destination)
         @confirmation_n = rand(100...9000)
-        flight = Flight.find_or_create_by(tourist_id: nil, destination_id: nil, confirmation_num: @confirmation_n)
+        flight = Flight.find_or_create_by(tourist_id: tourist.id, destination_id: destination.id, confirmation_num: @confirmation_n)
         puts "Your flight confirmation number is #{@confirmation_n}."
     end 
 
@@ -68,22 +63,21 @@ class CommandLineInterface
             @confirm_flight = gets.chomp.capitalize
     end
 
-    def confirm
+    def confirm(tourist, destination)
         if @confirm_flight == "Yes"
         activity
         puts "Great, #{@name_input}! You have booked your flight to #{@city_input}, #{@country_input} from #{@depart_date_input} - #{@return_date_input}#{@final_chosen}."
         puts "          "
-        get_flights
+        get_flights(tourist, destination)
 
              else
                puts "Would you like to choose another destination? Please input Yes or No"
                   @check_another_flight = gets.chomp.capitalize
     
              if @check_another_flight == "Yes"
-               get_destination
-               get_flights
+               new_destination = get_destination
                  p
-                  confirm
+                  confirm(tourist, new_destination)
              else
                 system "echo Thank you #{@name_input} for visiting us, hope too see you again soon! | lolcat -a -d 500"
              end
@@ -105,13 +99,5 @@ class CommandLineInterface
 end 
     
     
-# def get_destination
-#     puts "Please enter the city you'd like to visit:"
-#       @city_input = gets.chomp.capitalize 
-#         puts "Please enter the country:"
-#          @country_input = gets.chomp.capitalize 
-#            puts "Enter your departure date (MM/DD/YYYY):"
-#             @depart_date_input = gets.chomp
-#              puts "Enter your return date (MM/DD/YYYY):"
-#               @return_date_input = gets.chomp 
+
     
